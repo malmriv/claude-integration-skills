@@ -1,0 +1,236 @@
+{
+ "name": "ZZ Lab T6 Deployable",
+ "participants": [
+  {
+   "id": "Participant_1",
+   "name": "Sender",
+   "role": "sender"
+  },
+  {
+   "id": "Participant_2",
+   "name": "Backend",
+   "role": "receiver"
+  }
+ ],
+ "processes": [
+  {
+   "id": "Process_1",
+   "name": "Integration Process",
+   "type": "IntegrationProcess",
+   "steps": [
+    {
+     "id": "StartEvent_1",
+     "type": "MessageStartEvent",
+     "name": "Start"
+    },
+    {
+     "id": "CallActivity_1",
+     "type": "Enricher",
+     "name": "Set Kind",
+     "props": {
+      "headerTable": [
+       {
+        "Action": "Create",
+        "Type": "constant",
+        "Value": "A",
+        "Default": "",
+        "Name": "Kind",
+        "Datatype": ""
+       }
+      ]
+     }
+    },
+    {
+     "id": "ExclusiveGateway_1",
+     "type": "ExclusiveGateway",
+     "name": "Kind?"
+    },
+    {
+     "id": "CallActivity_2",
+     "type": "GroovyScript",
+     "name": "Script A",
+     "props": {
+      "script": "t6.groovy"
+     }
+    },
+    {
+     "id": "CallActivity_3",
+     "type": "NonLoopingProcess",
+     "name": "Call local",
+     "props": {
+      "processId": "Process_2"
+     }
+    },
+    {
+     "id": "ServiceTask_1",
+     "type": "ExternalCall",
+     "name": "Call backend"
+    },
+    {
+     "id": "EndEvent_1",
+     "type": "MessageEndEvent",
+     "name": "End A"
+    },
+    {
+     "id": "EndEvent_2",
+     "type": "MessageEndEvent",
+     "name": "End B"
+    }
+   ],
+   "flows": [
+    {
+     "id": "SequenceFlow_1",
+     "from": "StartEvent_1",
+     "to": "CallActivity_1"
+    },
+    {
+     "id": "SequenceFlow_2",
+     "from": "CallActivity_1",
+     "to": "ExclusiveGateway_1"
+    },
+    {
+     "id": "SequenceFlow_3",
+     "from": "ExclusiveGateway_1",
+     "to": "CallActivity_2",
+     "name": "A",
+     "condition": "${header.Kind} = 'A'",
+     "expressionType": "NonXML"
+    },
+    {
+     "id": "SequenceFlow_4",
+     "from": "ExclusiveGateway_1",
+     "to": "ServiceTask_1",
+     "name": "Other",
+     "default": true
+    },
+    {
+     "id": "SequenceFlow_5",
+     "from": "CallActivity_2",
+     "to": "CallActivity_3"
+    },
+    {
+     "id": "SequenceFlow_6",
+     "from": "CallActivity_3",
+     "to": "EndEvent_1"
+    },
+    {
+     "id": "SequenceFlow_7",
+     "from": "ServiceTask_1",
+     "to": "EndEvent_2"
+    }
+   ],
+   "subprocesses": [
+    {
+     "id": "SubProcess_1",
+     "type": "ErrorEventSubProcessTemplate",
+     "name": "Exception Subprocess",
+     "steps": [
+      {
+       "id": "StartEvent_9",
+       "type": "ErrorStartEvent",
+       "name": "Error Start"
+      },
+      {
+       "id": "CallActivity_9",
+       "type": "Enricher",
+       "name": "Error body",
+       "props": {
+        "bodyType": "expression",
+        "wrapContent": "<error>${exception.message}</error>"
+       }
+      },
+      {
+       "id": "EndEvent_9",
+       "type": "MessageEndEvent",
+       "name": "End Error"
+      }
+     ],
+     "flows": [
+      {
+       "id": "SequenceFlow_91",
+       "from": "StartEvent_9",
+       "to": "CallActivity_9"
+      },
+      {
+       "id": "SequenceFlow_92",
+       "from": "CallActivity_9",
+       "to": "EndEvent_9"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "Process_2",
+   "name": "Local Process",
+   "type": "LocalIntegrationProcess",
+   "steps": [
+    {
+     "id": "StartEvent_2",
+     "type": "StartEvent",
+     "name": "Start L"
+    },
+    {
+     "id": "CallActivity_21",
+     "type": "Enricher",
+     "name": "Set prop",
+     "props": {
+      "propertyTable": [
+       {
+        "Action": "Create",
+        "Type": "constant",
+        "Value": "yes",
+        "Default": "",
+        "Name": "FromLocal",
+        "Datatype": ""
+       }
+      ]
+     }
+    },
+    {
+     "id": "EndEvent_21",
+     "type": "EndEvent",
+     "name": "End L"
+    }
+   ],
+   "flows": [
+    {
+     "id": "SequenceFlow_21",
+     "from": "StartEvent_2",
+     "to": "CallActivity_21"
+    },
+    {
+     "id": "SequenceFlow_22",
+     "from": "CallActivity_21",
+     "to": "EndEvent_21"
+    }
+   ]
+  }
+ ],
+ "messageFlows": [
+  {
+   "id": "MessageFlow_1",
+   "adapter": "HTTPS",
+   "direction": "Sender",
+   "from": "Participant_1",
+   "to": "StartEvent_1",
+   "name": "HTTPS",
+   "props": {
+    "urlPath": "/zz/lab/t6"
+   }
+  },
+  {
+   "id": "MessageFlow_2",
+   "adapter": "HTTP",
+   "direction": "Receiver",
+   "from": "ServiceTask_1",
+   "to": "Participant_2",
+   "name": "HTTP",
+   "props": {
+    "httpAddressWithoutQuery": "https://example.org/api",
+    "httpMethod": "POST",
+    "authenticationMethod": "None"
+   }
+  }
+ ]
+}

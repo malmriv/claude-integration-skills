@@ -1,0 +1,182 @@
+{
+ "delete": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor delete"
+ },
+ "select": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor select"
+ },
+ "Base64 Decode": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor Base64 Decode"
+ },
+ "GZIP Decompress": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor GZIP Decompress"
+ },
+ "MIME Multipart Message Decode": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor MIME Multipart Message Decode"
+ },
+ "ZIP Decompress": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor ZIP Decompress"
+ },
+ "Decrypt": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor Decrypt"
+ },
+ "EDIExtractor": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor EDIExtractor"
+ },
+ "EDIValidator": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor EDIValidator"
+ },
+ "EDItoXMLConverter": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor EDItoXMLConverter"
+ },
+ "GZIP Compress": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor GZIP Compress"
+ },
+ "MIME Multipart Message Encode": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor MIME Multipart Message Encode"
+ },
+ "Encrypt": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor Encrypt"
+ },
+ "IDMapper": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor IDMapper"
+ },
+ "IdempotentProcessCall": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor IdempotentProcessCall; lab T2/T5: processId must reference a Local Integration Process"
+ },
+ "Persist": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor Persist"
+ },
+ "PgpDecrypt": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor PgpDecrypt"
+ },
+ "PgpEncrypt": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor PgpEncrypt"
+ },
+ "JavaScript": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor JavaScript"
+ },
+ "SignMessage": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor SignMessage"
+ },
+ "SimpleSignMessage": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor SimpleSignMessage"
+ },
+ "EDISplitter": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor Splitter_EDISplitter"
+ },
+ "IDoc": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor Splitter_IDoc"
+ },
+ "PKCS#7/CMS Signature-Content Splitter": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor Splitter_PKCS#7/CMS Signature-Content Splitter"
+ },
+ "TarSplitter": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor Splitter_TarSplitter"
+ },
+ "ZipSplitter": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor Splitter_ZipSplitter"
+ },
+ "VerifySign": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor VerifySign"
+ },
+ "XMLDigitalSignMessage": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor XMLDigitalSignMessage"
+ },
+ "XMLDigitalVerifySign": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor XMLDigitalVerifySign"
+ },
+ "XMLtoEDIConverter": {
+  "verified": "tenant-upload",
+  "bpmn": "callActivity",
+  "propsOn": "element",
+  "verifiedBy": "lab T1: tenant recognised palette flavor XMLtoEDIConverter"
+ }
+}

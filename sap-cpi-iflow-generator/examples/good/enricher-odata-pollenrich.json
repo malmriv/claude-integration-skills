@@ -1,0 +1,280 @@
+{
+ "name": "Enricher OData + PollEnrich SFTP + local processes",
+ "participants": [
+  {
+   "id": "Participant_1",
+   "name": "Sender",
+   "role": "sender"
+  },
+  {
+   "id": "Participant_2",
+   "name": "S4",
+   "role": "receiver"
+  },
+  {
+   "id": "Participant_3",
+   "name": "SFTP",
+   "role": "sender"
+  }
+ ],
+ "processes": [
+  {
+   "id": "Process_1",
+   "name": "Main",
+   "type": "IntegrationProcess",
+   "steps": [
+    {
+     "id": "StartEvent_1",
+     "type": "MessageStartEvent",
+     "name": "Start"
+    },
+    {
+     "id": "CallActivity_1",
+     "type": "NonLoopingProcess",
+     "name": "Call Ra",
+     "props": {
+      "processId": "Process_21"
+     }
+    },
+    {
+     "id": "CallActivity_2",
+     "type": "NonLoopingProcess",
+     "name": "Call Rb",
+     "props": {
+      "processId": "Process_22"
+     }
+    },
+    {
+     "id": "CallActivity_3",
+     "type": "NonLoopingProcess",
+     "name": "Call Rc",
+     "props": {
+      "processId": "Process_23"
+     }
+    },
+    {
+     "id": "ServiceTask_1",
+     "type": "contentEnricherWithLookup",
+     "name": "Enrich OData",
+     "props": {
+      "originalMessageNodePath": "/root/item",
+      "originalMessageKeyElement": "id",
+      "resourceMessageNodePath": "/feed/entry",
+      "resourceMessageKeyElement": "id"
+     }
+    },
+    {
+     "id": "ServiceTask_2",
+     "type": "PollEnrich",
+     "name": "Poll SFTP"
+    },
+    {
+     "id": "EndEvent_1",
+     "type": "MessageEndEvent",
+     "name": "End"
+    }
+   ],
+   "flows": [
+    {
+     "id": "SequenceFlow_1",
+     "from": "StartEvent_1",
+     "to": "CallActivity_1"
+    },
+    {
+     "id": "SequenceFlow_2",
+     "from": "CallActivity_1",
+     "to": "CallActivity_2"
+    },
+    {
+     "id": "SequenceFlow_3",
+     "from": "CallActivity_2",
+     "to": "CallActivity_3"
+    },
+    {
+     "id": "SequenceFlow_4",
+     "from": "CallActivity_3",
+     "to": "ServiceTask_1"
+    },
+    {
+     "id": "SequenceFlow_5",
+     "from": "ServiceTask_1",
+     "to": "ServiceTask_2"
+    },
+    {
+     "id": "SequenceFlow_6",
+     "from": "ServiceTask_2",
+     "to": "EndEvent_1"
+    }
+   ]
+  },
+  {
+   "id": "Process_21",
+   "name": "Process_21",
+   "type": "LocalIntegrationProcess",
+   "steps": [
+    {
+     "id": "StartEvent_21",
+     "type": "StartEvent",
+     "name": "Start"
+    },
+    {
+     "id": "CallActivity_21",
+     "type": "Enricher",
+     "name": "CM with header",
+     "props": {
+      "headerTable": [
+       {
+        "Action": "Create",
+        "Type": "constant",
+        "Value": "1",
+        "Default": "",
+        "Name": "X",
+        "Datatype": ""
+       }
+      ]
+     }
+    },
+    {
+     "id": "EndEvent_21",
+     "type": "EndEvent",
+     "name": "End"
+    }
+   ],
+   "flows": [
+    {
+     "id": "SequenceFlow_211",
+     "from": "StartEvent_21",
+     "to": "CallActivity_21"
+    },
+    {
+     "id": "SequenceFlow_212",
+     "from": "CallActivity_21",
+     "to": "EndEvent_21"
+    }
+   ]
+  },
+  {
+   "id": "Process_22",
+   "name": "Process_22",
+   "type": "LocalIntegrationProcess",
+   "steps": [
+    {
+     "id": "StartEvent_22",
+     "type": "StartEvent",
+     "name": "Start"
+    },
+    {
+     "id": "CallActivity_22",
+     "type": "GroovyScript",
+     "name": "Script",
+     "props": {
+      "script": "t5.groovy"
+     }
+    },
+    {
+     "id": "EndEvent_22",
+     "type": "EndEvent",
+     "name": "End"
+    }
+   ],
+   "flows": [
+    {
+     "id": "SequenceFlow_221",
+     "from": "StartEvent_22",
+     "to": "CallActivity_22"
+    },
+    {
+     "id": "SequenceFlow_222",
+     "from": "CallActivity_22",
+     "to": "EndEvent_22"
+    }
+   ]
+  },
+  {
+   "id": "Process_23",
+   "name": "Process_23",
+   "type": "LocalIntegrationProcess",
+   "steps": [
+    {
+     "id": "StartEvent_23",
+     "type": "StartEvent",
+     "name": "Start"
+    },
+    {
+     "id": "CallActivity_23",
+     "type": "Enricher",
+     "name": "CM with property",
+     "props": {
+      "propertyTable": [
+       {
+        "Action": "Create",
+        "Type": "constant",
+        "Value": "1",
+        "Default": "",
+        "Name": "P",
+        "Datatype": ""
+       }
+      ]
+     }
+    },
+    {
+     "id": "EndEvent_23",
+     "type": "EndEvent",
+     "name": "End"
+    }
+   ],
+   "flows": [
+    {
+     "id": "SequenceFlow_231",
+     "from": "StartEvent_23",
+     "to": "CallActivity_23"
+    },
+    {
+     "id": "SequenceFlow_232",
+     "from": "CallActivity_23",
+     "to": "EndEvent_23"
+    }
+   ]
+  }
+ ],
+ "messageFlows": [
+  {
+   "id": "MessageFlow_1",
+   "adapter": "HTTPS",
+   "direction": "Sender",
+   "from": "Participant_1",
+   "to": "StartEvent_1",
+   "name": "HTTPS",
+   "props": {
+    "urlPath": "/zz/lab/t5"
+   }
+  },
+  {
+   "id": "MessageFlow_2",
+   "adapter": "HCIOData",
+   "messageProtocol": "OData V2",
+   "direction": "Receiver",
+   "from": "Participant_2",
+   "to": "ServiceTask_1",
+   "name": "OData",
+   "props": {
+    "address": "https://example.org/odata",
+    "resourcePath": "Products"
+   }
+  },
+  {
+   "id": "MessageFlow_3",
+   "adapter": "PollingSFTP",
+   "direction": "Sender",
+   "from": "Participant_3",
+   "to": "ServiceTask_2",
+   "name": "SFTP",
+   "props": {
+    "host": "sftp.example.org:22",
+    "username": "lab",
+    "path": "/in",
+    "fileName": "a.txt"
+   }
+  }
+ ]
+}

@@ -1,0 +1,1066 @@
+{
+ "name": "ZZ Lab T1 All Components",
+ "participants": [
+  {
+   "id": "Sender",
+   "name": "Sender",
+   "role": "sender"
+  },
+  {
+   "id": "R_HTTP",
+   "name": "HTTPBackend",
+   "role": "receiver"
+  },
+  {
+   "id": "R_OData",
+   "name": "S4OData",
+   "role": "receiver"
+  },
+  {
+   "id": "R_Mail",
+   "name": "MailServer",
+   "role": "receiver"
+  },
+  {
+   "id": "R_SFTP",
+   "name": "SFTPServer",
+   "role": "receiver"
+  },
+  {
+   "id": "R_JMS",
+   "name": "JMSQueue",
+   "role": "receiver"
+  },
+  {
+   "id": "R_PD",
+   "name": "OtherIflow",
+   "role": "receiver"
+  },
+  {
+   "id": "R_SOAP",
+   "name": "SOAPBackend",
+   "role": "receiver"
+  },
+  {
+   "id": "R_IDOC",
+   "name": "ERP",
+   "role": "receiver"
+  },
+  {
+   "id": "R_XI",
+   "name": "PIPO",
+   "role": "receiver"
+  },
+  {
+   "id": "R_SFTPPOLL",
+   "name": "SFTPPoll",
+   "role": "sender"
+  },
+  {
+   "id": "R_ENRICH",
+   "name": "S4Lookup",
+   "role": "receiver"
+  }
+ ],
+ "processes": [
+  {
+   "id": "Process_1",
+   "name": "Main",
+   "type": "IntegrationProcess",
+   "steps": [
+    {
+     "id": "Start",
+     "type": "MessageStartEvent",
+     "name": "Start"
+    },
+    {
+     "id": "S_CM",
+     "type": "Enricher",
+     "name": "CM",
+     "props": {
+      "headerTable": [
+       {
+        "Action": "Create",
+        "Type": "constant",
+        "Value": "1",
+        "Default": "",
+        "Name": "X",
+        "Datatype": ""
+       }
+      ],
+      "bodyType": "expression",
+      "wrapContent": "<root>${header.X}</root>"
+     }
+    },
+    {
+     "id": "S_GROOVY",
+     "type": "GroovyScript",
+     "name": "Groovy",
+     "props": {
+      "script": "t1.groovy"
+     }
+    },
+    {
+     "id": "S_JS",
+     "type": "JavaScript",
+     "name": "JS",
+     "props": {
+      "script": "t1.js"
+     }
+    },
+    {
+     "id": "S_XSLT",
+     "type": "XSLTMapping",
+     "name": "XSLT",
+     "props": {
+      "mappingname": "T1"
+     }
+    },
+    {
+     "id": "S_XVAL",
+     "type": "XmlValidator",
+     "name": "XmlValidator"
+    },
+    {
+     "id": "S_XMOD",
+     "type": "XmlModifier",
+     "name": "XmlModifier"
+    },
+    {
+     "id": "S_FILTER",
+     "type": "Filter",
+     "name": "Filter",
+     "props": {
+      "wrapContent": "/root"
+     }
+    },
+    {
+     "id": "S_X2J",
+     "type": "XmlToJsonConverter",
+     "name": "X2J"
+    },
+    {
+     "id": "S_J2X",
+     "type": "JsonToXmlConverter",
+     "name": "J2X"
+    },
+    {
+     "id": "S_X2C",
+     "type": "XmlToCsvConverter",
+     "name": "X2C"
+    },
+    {
+     "id": "S_C2X",
+     "type": "CsvToXmlConverter",
+     "name": "C2X"
+    },
+    {
+     "id": "S_B64E",
+     "type": "Base64 Encode",
+     "name": "B64E"
+    },
+    {
+     "id": "S_B64D",
+     "type": "Base64 Decode",
+     "name": "B64D"
+    },
+    {
+     "id": "S_GZE",
+     "type": "GZIP Compress",
+     "name": "GZE"
+    },
+    {
+     "id": "S_GZD",
+     "type": "GZIP Decompress",
+     "name": "GZD"
+    },
+    {
+     "id": "S_ZE",
+     "type": "ZIP Compress",
+     "name": "ZE"
+    },
+    {
+     "id": "S_ZD",
+     "type": "ZIP Decompress",
+     "name": "ZD"
+    },
+    {
+     "id": "S_MIMEE",
+     "type": "MIME Multipart Message Encode",
+     "name": "MIMEE"
+    },
+    {
+     "id": "S_MIMED",
+     "type": "MIME Multipart Message Decode",
+     "name": "MIMED"
+    },
+    {
+     "id": "S_DIG",
+     "type": "MessageDigest",
+     "name": "Digest"
+    },
+    {
+     "id": "S_PUT",
+     "type": "put",
+     "name": "DS Write",
+     "props": {
+      "storageName": "T1"
+     }
+    },
+    {
+     "id": "S_GET",
+     "type": "get",
+     "name": "DS Get",
+     "props": {
+      "storageName": "T1"
+     }
+    },
+    {
+     "id": "S_SEL",
+     "type": "select",
+     "name": "DS Select",
+     "props": {
+      "storageName": "T1"
+     }
+    },
+    {
+     "id": "S_DEL",
+     "type": "delete",
+     "name": "DS Delete",
+     "props": {
+      "storageName": "T1"
+     }
+    },
+    {
+     "id": "S_PERSIST",
+     "type": "Persist",
+     "name": "Persist"
+    },
+    {
+     "id": "S_VARS",
+     "type": "Variables",
+     "name": "Vars"
+    },
+    {
+     "id": "S_IDMAP",
+     "type": "IDMapper",
+     "name": "IDMap"
+    },
+    {
+     "id": "S_PGPE",
+     "type": "PgpEncrypt",
+     "name": "PGPE"
+    },
+    {
+     "id": "S_PGPD",
+     "type": "PgpDecrypt",
+     "name": "PGPD"
+    },
+    {
+     "id": "S_PKE",
+     "type": "Encrypt",
+     "name": "PKCS7E"
+    },
+    {
+     "id": "S_PKD",
+     "type": "Decrypt",
+     "name": "PKCS7D"
+    },
+    {
+     "id": "S_SIGN",
+     "type": "SignMessage",
+     "name": "Sign"
+    },
+    {
+     "id": "S_VSIGN",
+     "type": "VerifySign",
+     "name": "Verify"
+    },
+    {
+     "id": "S_SSIGN",
+     "type": "SimpleSignMessage",
+     "name": "SimpleSign"
+    },
+    {
+     "id": "S_XSIGN",
+     "type": "XMLDigitalSignMessage",
+     "name": "XMLSign"
+    },
+    {
+     "id": "S_XVER",
+     "type": "XMLDigitalVerifySign",
+     "name": "XMLVerify"
+    },
+    {
+     "id": "S_EDIX",
+     "type": "EDIExtractor",
+     "name": "EDIExtract"
+    },
+    {
+     "id": "S_EDIV",
+     "type": "EDIValidator",
+     "name": "EDIValidate"
+    },
+    {
+     "id": "S_E2X",
+     "type": "EDItoXMLConverter",
+     "name": "E2X"
+    },
+    {
+     "id": "S_X2E",
+     "type": "XMLtoEDIConverter",
+     "name": "X2E"
+    },
+    {
+     "id": "S_GSPL",
+     "type": "GeneralSplitter",
+     "name": "GenSplit",
+     "props": {
+      "splitExprValue": "/root/item"
+     }
+    },
+    {
+     "id": "S_ISPL",
+     "type": "Camel",
+     "name": "IterSplit",
+     "props": {
+      "splitExprValue": "/root/item"
+     }
+    },
+    {
+     "id": "S_ZSPL",
+     "type": "ZipSplitter",
+     "name": "ZipSplit"
+    },
+    {
+     "id": "S_TSPL",
+     "type": "TarSplitter",
+     "name": "TarSplit"
+    },
+    {
+     "id": "S_IDSPL",
+     "type": "IDoc",
+     "name": "IDocSplit"
+    },
+    {
+     "id": "S_ESPL",
+     "type": "EDISplitter",
+     "name": "EDISplit"
+    },
+    {
+     "id": "S_PSPL",
+     "type": "PKCS#7/CMS Signature-Content Splitter",
+     "name": "PKCSSplit"
+    },
+    {
+     "id": "S_GATHER",
+     "type": "Gather",
+     "name": "Gather"
+    },
+    {
+     "id": "S_AGG",
+     "type": "Aggregator",
+     "name": "Aggregator"
+    },
+    {
+     "id": "S_IDEM",
+     "type": "IdempotentProcessCall",
+     "name": "Idempotent",
+     "props": {
+      "processId": "Process_2"
+     }
+    },
+    {
+     "id": "S_CALL",
+     "type": "NonLoopingProcess",
+     "name": "Call Local",
+     "props": {
+      "processId": "Process_2"
+     }
+    },
+    {
+     "id": "S_LOOP",
+     "type": "LoopingProcess",
+     "name": "Loop Local",
+     "props": {
+      "processId": "Process_3",
+      "condition": "${property.CamelLoopIndex} < 3",
+      "loopMaximum": "5"
+     }
+    },
+    {
+     "id": "S_RR",
+     "type": "ExternalCall",
+     "name": "Request Reply HTTP"
+    },
+    {
+     "id": "S_RR2",
+     "type": "ExternalCall",
+     "name": "Request Reply OData"
+    },
+    {
+     "id": "S_RR3",
+     "type": "ExternalCall",
+     "name": "Request Reply SOAP"
+    },
+    {
+     "id": "S_ENRICH",
+     "type": "contentEnricherWithLookup",
+     "name": "Content Enricher"
+    },
+    {
+     "id": "S_POLL",
+     "type": "PollEnrich",
+     "name": "Poll Enrich"
+    },
+    {
+     "id": "S_SEND",
+     "type": "Send",
+     "name": "Send Mail"
+    },
+    {
+     "id": "S_SEND2",
+     "type": "Send",
+     "name": "Send JMS"
+    },
+    {
+     "id": "S_SEND3",
+     "type": "Send",
+     "name": "Send PD"
+    },
+    {
+     "id": "S_SEND4",
+     "type": "Send",
+     "name": "Send IDoc"
+    },
+    {
+     "id": "S_SEND5",
+     "type": "Send",
+     "name": "Send XI"
+    },
+    {
+     "id": "S_MC",
+     "type": "Multicast",
+     "name": "Multicast"
+    },
+    {
+     "id": "S_MC_A",
+     "type": "Enricher",
+     "name": "Branch A"
+    },
+    {
+     "id": "S_MC_B",
+     "type": "Enricher",
+     "name": "Branch B"
+    },
+    {
+     "id": "S_JOIN",
+     "type": "Join",
+     "name": "Join"
+    },
+    {
+     "id": "S_GATHER2",
+     "type": "Gather",
+     "name": "Gather MC"
+    },
+    {
+     "id": "S_SMC",
+     "type": "SequentialMulticast",
+     "name": "SeqMulticast"
+    },
+    {
+     "id": "S_SMC_A",
+     "type": "Enricher",
+     "name": "Seq A"
+    },
+    {
+     "id": "S_SMC_B",
+     "type": "Enricher",
+     "name": "Seq B"
+    },
+    {
+     "id": "S_ROUTER",
+     "type": "ExclusiveGateway",
+     "name": "Router"
+    },
+    {
+     "id": "S_R1",
+     "type": "Enricher",
+     "name": "Route 1 step"
+    },
+    {
+     "id": "End",
+     "type": "MessageEndEvent",
+     "name": "End"
+    },
+    {
+     "id": "End2",
+     "type": "MessageEndEvent",
+     "name": "End 2"
+    },
+    {
+     "id": "EndSeqA",
+     "type": "MessageEndEvent",
+     "name": "End SeqA"
+    },
+    {
+     "id": "EndSeqB",
+     "type": "MessageEndEvent",
+     "name": "End SeqB"
+    },
+    {
+     "id": "Term",
+     "type": "TerminateEndEvent",
+     "name": "Terminate"
+    }
+   ],
+   "flows": [
+    [
+     "Start",
+     "S_CM"
+    ],
+    [
+     "S_CM",
+     "S_GROOVY"
+    ],
+    [
+     "S_GROOVY",
+     "S_JS"
+    ],
+    [
+     "S_JS",
+     "S_XSLT"
+    ],
+    [
+     "S_XSLT",
+     "S_XVAL"
+    ],
+    [
+     "S_XVAL",
+     "S_XMOD"
+    ],
+    [
+     "S_XMOD",
+     "S_FILTER"
+    ],
+    [
+     "S_FILTER",
+     "S_X2J"
+    ],
+    [
+     "S_X2J",
+     "S_J2X"
+    ],
+    [
+     "S_J2X",
+     "S_X2C"
+    ],
+    [
+     "S_X2C",
+     "S_C2X"
+    ],
+    [
+     "S_C2X",
+     "S_B64E"
+    ],
+    [
+     "S_B64E",
+     "S_B64D"
+    ],
+    [
+     "S_B64D",
+     "S_GZE"
+    ],
+    [
+     "S_GZE",
+     "S_GZD"
+    ],
+    [
+     "S_GZD",
+     "S_ZE"
+    ],
+    [
+     "S_ZE",
+     "S_ZD"
+    ],
+    [
+     "S_ZD",
+     "S_MIMEE"
+    ],
+    [
+     "S_MIMEE",
+     "S_MIMED"
+    ],
+    [
+     "S_MIMED",
+     "S_DIG"
+    ],
+    [
+     "S_DIG",
+     "S_PUT"
+    ],
+    [
+     "S_PUT",
+     "S_GET"
+    ],
+    [
+     "S_GET",
+     "S_SEL"
+    ],
+    [
+     "S_SEL",
+     "S_DEL"
+    ],
+    [
+     "S_DEL",
+     "S_PERSIST"
+    ],
+    [
+     "S_PERSIST",
+     "S_VARS"
+    ],
+    [
+     "S_VARS",
+     "S_IDMAP"
+    ],
+    [
+     "S_IDMAP",
+     "S_PGPE"
+    ],
+    [
+     "S_PGPE",
+     "S_PGPD"
+    ],
+    [
+     "S_PGPD",
+     "S_PKE"
+    ],
+    [
+     "S_PKE",
+     "S_PKD"
+    ],
+    [
+     "S_PKD",
+     "S_SIGN"
+    ],
+    [
+     "S_SIGN",
+     "S_VSIGN"
+    ],
+    [
+     "S_VSIGN",
+     "S_SSIGN"
+    ],
+    [
+     "S_SSIGN",
+     "S_XSIGN"
+    ],
+    [
+     "S_XSIGN",
+     "S_XVER"
+    ],
+    [
+     "S_XVER",
+     "S_EDIX"
+    ],
+    [
+     "S_EDIX",
+     "S_EDIV"
+    ],
+    [
+     "S_EDIV",
+     "S_E2X"
+    ],
+    [
+     "S_E2X",
+     "S_X2E"
+    ],
+    [
+     "S_X2E",
+     "S_GSPL"
+    ],
+    [
+     "S_GSPL",
+     "S_ISPL"
+    ],
+    [
+     "S_ISPL",
+     "S_ZSPL"
+    ],
+    [
+     "S_ZSPL",
+     "S_TSPL"
+    ],
+    [
+     "S_TSPL",
+     "S_IDSPL"
+    ],
+    [
+     "S_IDSPL",
+     "S_ESPL"
+    ],
+    [
+     "S_ESPL",
+     "S_PSPL"
+    ],
+    [
+     "S_PSPL",
+     "S_GATHER"
+    ],
+    [
+     "S_GATHER",
+     "S_AGG"
+    ],
+    [
+     "S_AGG",
+     "S_IDEM"
+    ],
+    [
+     "S_IDEM",
+     "S_CALL"
+    ],
+    [
+     "S_CALL",
+     "S_LOOP"
+    ],
+    [
+     "S_LOOP",
+     "S_RR"
+    ],
+    [
+     "S_RR",
+     "S_RR2"
+    ],
+    [
+     "S_RR2",
+     "S_RR3"
+    ],
+    [
+     "S_RR3",
+     "S_ENRICH"
+    ],
+    [
+     "S_ENRICH",
+     "S_POLL"
+    ],
+    [
+     "S_POLL",
+     "S_SEND"
+    ],
+    [
+     "S_SEND",
+     "S_SEND2"
+    ],
+    [
+     "S_SEND2",
+     "S_SEND3"
+    ],
+    [
+     "S_SEND3",
+     "S_SEND4"
+    ],
+    [
+     "S_SEND4",
+     "S_SEND5"
+    ],
+    [
+     "S_SEND5",
+     "S_MC"
+    ],
+    {
+     "from": "S_MC",
+     "to": "S_MC_A",
+     "name": "Branch 1"
+    },
+    {
+     "from": "S_MC",
+     "to": "S_MC_B",
+     "name": "Branch 2"
+    },
+    [
+     "S_MC_A",
+     "S_JOIN"
+    ],
+    [
+     "S_MC_B",
+     "S_JOIN"
+    ],
+    [
+     "S_JOIN",
+     "S_GATHER2"
+    ],
+    [
+     "S_GATHER2",
+     "S_ROUTER"
+    ],
+    {
+     "from": "S_ROUTER",
+     "to": "S_R1",
+     "name": "Route 1",
+     "condition": "${header.X} = '1'",
+     "expressionType": "NonXML"
+    },
+    {
+     "from": "S_ROUTER",
+     "to": "S_SMC",
+     "name": "Route 2",
+     "default": true
+    },
+    [
+     "S_R1",
+     "End"
+    ],
+    {
+     "from": "S_SMC",
+     "to": "S_SMC_A",
+     "name": "Branch 1"
+    },
+    {
+     "from": "S_SMC",
+     "to": "S_SMC_B",
+     "name": "Branch 2"
+    },
+    [
+     "S_SMC_A",
+     "EndSeqA"
+    ],
+    [
+     "S_SMC_B",
+     "EndSeqB"
+    ]
+   ],
+   "subprocesses": [
+    {
+     "id": "SubProcess_1",
+     "type": "ErrorEventSubProcessTemplate",
+     "name": "Exception Subprocess",
+     "steps": [
+      {
+       "id": "ErrStart",
+       "type": "ErrorStartEvent",
+       "name": "Error Start"
+      },
+      {
+       "id": "ErrLog",
+       "type": "Enricher",
+       "name": "Log error"
+      },
+      {
+       "id": "EscEnd",
+       "type": "EscalationEndEvent",
+       "name": "Escalation End"
+      }
+     ],
+     "flows": [
+      [
+       "ErrStart",
+       "ErrLog"
+      ],
+      [
+       "ErrLog",
+       "EscEnd"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "Process_2",
+   "name": "Local A",
+   "type": "LocalIntegrationProcess",
+   "steps": [
+    {
+     "id": "LA_Start",
+     "type": "StartEvent",
+     "name": "Start A"
+    },
+    {
+     "id": "LA_CM",
+     "type": "Enricher",
+     "name": "CM A",
+     "props": {
+      "propertyTable": [
+       {
+        "Action": "Create",
+        "Type": "constant",
+        "Value": "1",
+        "Default": "",
+        "Name": "P",
+        "Datatype": ""
+       }
+      ]
+     }
+    },
+    {
+     "id": "LA_End",
+     "type": "EndEvent",
+     "name": "End A"
+    }
+   ],
+   "flows": [
+    [
+     "LA_Start",
+     "LA_CM"
+    ],
+    [
+     "LA_CM",
+     "LA_End"
+    ]
+   ]
+  },
+  {
+   "id": "Process_3",
+   "name": "Local B",
+   "type": "LocalIntegrationProcess",
+   "steps": [
+    {
+     "id": "LB_Start",
+     "type": "StartEvent",
+     "name": "Start B"
+    },
+    {
+     "id": "LB_CM",
+     "type": "Enricher",
+     "name": "CM B",
+     "props": {
+      "propertyTable": [
+       {
+        "Action": "Create",
+        "Type": "constant",
+        "Value": "1",
+        "Default": "",
+        "Name": "P",
+        "Datatype": ""
+       }
+      ]
+     }
+    },
+    {
+     "id": "LB_Err",
+     "type": "ErrorEndEvent",
+     "name": "Error End B"
+    }
+   ],
+   "flows": [
+    [
+     "LB_Start",
+     "LB_CM"
+    ],
+    [
+     "LB_CM",
+     "LB_Err"
+    ]
+   ]
+  }
+ ],
+ "messageFlows": [
+  {
+   "id": "MF_IN",
+   "adapter": "HTTPS",
+   "direction": "Sender",
+   "from": "Sender",
+   "to": "Start",
+   "name": "HTTPS",
+   "props": {
+    "urlPath": "/zz/lab/t1"
+   }
+  },
+  {
+   "id": "MF_HTTP",
+   "adapter": "HTTP",
+   "direction": "Receiver",
+   "from": "S_RR",
+   "to": "R_HTTP",
+   "name": "HTTP",
+   "props": {
+    "httpAddressWithoutQuery": "https://example.org/api",
+    "httpMethod": "POST"
+   }
+  },
+  {
+   "id": "MF_ODATA",
+   "adapter": "HCIOData",
+   "messageProtocol": "OData V2",
+   "direction": "Receiver",
+   "from": "S_RR2",
+   "to": "R_OData",
+   "name": "OData"
+  },
+  {
+   "id": "MF_SOAP",
+   "adapter": "SOAP",
+   "messageProtocol": "SOAP 1.x",
+   "direction": "Receiver",
+   "from": "S_RR3",
+   "to": "R_SOAP",
+   "name": "SOAP",
+   "props": {
+    "address": "https://example.org/soap"
+   }
+  },
+  {
+   "id": "MF_MAIL",
+   "adapter": "Mail",
+   "direction": "Receiver",
+   "from": "S_SEND",
+   "to": "R_Mail",
+   "name": "Mail"
+  },
+  {
+   "id": "MF_SFTP",
+   "adapter": "PollingSFTP",
+   "direction": "Sender",
+   "from": "R_SFTPPOLL",
+   "to": "S_POLL",
+   "name": "SFTP",
+   "props": {
+    "host": "sftp.example.org:22",
+    "username": "lab",
+    "path": "/in",
+    "fileName": "a.txt"
+   }
+  },
+  {
+   "id": "MF_JMS",
+   "adapter": "JMS",
+   "direction": "Receiver",
+   "from": "S_SEND2",
+   "to": "R_JMS",
+   "name": "JMS"
+  },
+  {
+   "id": "MF_PD",
+   "adapter": "ProcessDirect",
+   "direction": "Receiver",
+   "from": "S_SEND3",
+   "to": "R_PD",
+   "name": "ProcessDirect"
+  },
+  {
+   "id": "MF_IDOC",
+   "adapter": "IDOC",
+   "direction": "Receiver",
+   "from": "S_SEND4",
+   "to": "R_IDOC",
+   "name": "IDoc"
+  },
+  {
+   "id": "MF_XI",
+   "adapter": "XI",
+   "direction": "Receiver",
+   "from": "S_SEND5",
+   "to": "R_XI",
+   "name": "XI"
+  },
+  {
+   "id": "MF_ENRICH",
+   "adapter": "HCIOData",
+   "messageProtocol": "OData V2",
+   "direction": "Receiver",
+   "from": "R_ENRICH",
+   "to": "S_ENRICH",
+   "name": "OData lookup"
+  }
+ ],
+ "_comment": "Recognition smoke test: one instance of every step type. Validates that the tenant recognises each identity; NOT meant to deploy (many steps keep empty mandatory settings)."
+}
